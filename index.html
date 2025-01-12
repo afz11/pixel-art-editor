@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
   <title>pixel art editor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
   <main>
@@ -15,8 +16,14 @@
     <canvas id="canvas"></canvas>
     <div class="grid-controls">
       <div class="control-group">
-        <label name="color-picker">Pick Color</label>
-        <input type="color" name="color-picker" id="color-picker">
+        <div class="color-picker-wrapper">
+          <label name="color-picker">Pick Color</label>
+          <input type="color" name="color-picker" id="color-picker">
+        </div>
+        <button type="reset" id="reset-grid">
+          <i class="fas fa-eraser"></i>
+          Clear Grid
+        </button>
       </div>
 
       <div class="control-group">
@@ -30,9 +37,14 @@
       </div>
 
       <div class="control-group buttons">
-        <button type="button" id="generate">Generate</button>
-        <button type="reset" id="reset-grid">Reset Grid</button>
-        <button type="button" id="save-grid">Save Image</button>
+        <button type="button" id="generate">
+          <i class="fas fa-th"></i>
+          Generate Grid
+        </button>
+        <button type="button" id="save-grid">
+          <i class="fas fa-download"></i>
+          Save Image
+        </button>
       </div>
       <div class="instruction control-group">
         <b>Instructions:</b><br>
