@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -39,7 +38,6 @@ main {
   aspect-ratio: 1;
   transition: background-color 0.1s ease;
 }
-
 
 .grid-controls {
   display: flex;
@@ -135,29 +133,6 @@ label {
   color: #333;
 }
 
-
-@media (max-width: 600px) {
-  main {
-    padding: 1rem;
-  }
-  
-  .grid-controls {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
-  button {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-  
-  .control-group.buttons {
-    gap: 0.5rem;
-  }
-}
-
-
 .title {
   text-align: center;
   margin-bottom: 2rem;
@@ -166,8 +141,70 @@ label {
   font-weight: 700;
 }
 
-@media (min-width: 600px) {
+@media (max-width: 768px) {
+  main {
+    padding: 1rem;
+  }
 
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .grid-controls {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .control-group:first-child {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .control-group:first-child #reset-grid {
+    height: 40px;
+    align-self: stretch;
+  }
+
+  .control-group.buttons {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  input[type="range"] {
+    height: 30px;
+  }
+
+  .instruction {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  main {
+    padding: 1.5rem;
+  }
+
+  .grid-controls {
+    padding: 1.2rem;
+  }
+
+  .control-group.buttons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .control-group:first-child {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
 }
 
 #generate:hover, #reset-grid:hover {
@@ -175,13 +212,11 @@ label {
   transform: translateY(-1px);
 }
 
-
 .control-group:first-child {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
-
 
 .control-group:first-child label {
   margin-bottom: 0.5rem;
@@ -193,8 +228,7 @@ label {
   gap: 0.5rem;
 }
 
-
 .control-group:first-child #reset-grid {
-  height: 50%;  
-  align-self: flex-end; 
+  height: 50%;
+  align-self: flex-end;
 }
