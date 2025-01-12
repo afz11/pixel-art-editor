@@ -9,8 +9,8 @@ const coloumsLabel =  document.querySelector('label[for="coloums"]')
 const mouseHover = document.querySelector('#mouse-hover')
 
 const gridDetails = {
-  rows: 8,
-  cols: 8,
+  rows: 16,
+  cols: 16,
   backgroundColor: "#c4c4c4"
 }
 

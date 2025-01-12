@@ -1,35 +1,165 @@
-body {
+/* 1. Set up basic reset and container styles */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 2. Style the grid and cells */
 .grid {
   display: grid;
   width: min(600px, 90vw);
-  background-color: #b1d19e;
   margin: 0 auto;
+  background-color: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #5e5a5a;
+  border: 1px solid #eaeaea;
   aspect-ratio: 1;
+  transition: background-color 0.1s ease;
 }
 
+/* 3. Style the controls section */
 .grid-controls {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
 }
 
-.active {
-  background-color: #002385;
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-#generate{
-  flex-grow: 0;
-  width: 10rem;
-  height: 3rem;
+.control-group.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* 4. Style the inputs and buttons */
+input[type="color"] {
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0;
+  accent-color: #666;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  background-color: #666;
+  color: white;
+  flex: 1;
+}
+
+#generate {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#generate:hover {
+  background-color: #45a049;
+}
+
+#reset-grid {
+  background-color: #2f32db;
+  color: white;
+}
+
+#reset-grid:hover {
+  background-color: #da190b;
+}
+
+/* 5. Style labels and text */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 6. Add some responsive adjustments */
+@media (max-width: 600px) {
+  main {
+    padding: 1rem;
+  }
+  
+  .grid-controls {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* Add this with the other styles */
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Update responsive styles */
+@media (min-width: 600px) {
+  .grid-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  /* Make color picker span full width */
+  .control-group:first-child {
+    grid-column: 1 / -1;
+  }
+  
+  .control-group.buttons {
+    grid-column: 1 / -1;
+  }
+}
+
+#generate:hover, #reset-grid:hover {
+  background-color: #444;
+  transform: translateY(-1px);
 }
