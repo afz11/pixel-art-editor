@@ -7,6 +7,10 @@ const coloums = document.querySelector('#coloums')
 const rowsLable =  document.querySelector('label[for="rows"]')
 const coloumsLabel =  document.querySelector('label[for="coloums"]')
 const mouseHover = document.querySelector('#mouse-hover')
+const saveBtn = document.querySelector('#save-grid')
+const canvas = document.querySelector('#canvas')
+
+const ctx = canvas.getContext('2d')
 
 const gridDetails = {
   rows: 16,
@@ -16,6 +20,53 @@ const gridDetails = {
 
 let isDrawing = false;
 let isErasing = false;
+
+function gridToCanvas() {
+  // Get all cells and their computed styles
+  const cells = Array.from(grid.querySelectorAll('.cell'))
+  const cellSize = 32 // Size of each cell in pixels
+
+// Set canvas size based on grid dimensions
+canvas.width = gridDetails.cols * cellSize
+canvas.height = gridDetails.rows * cellSize
+
+// Clear canvas
+ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+// Draw Each cell to canvas
+cells.forEach((cell, index) => {
+  const row = Math.floor(index / gridDetails.cols)
+  const col = index % gridDetails.cols
+  const x = col * cellSize
+  const y = row * cellSize
+
+  // Get cell color
+  const color = cell.style.backgroundColor || gridDetails.backgroundColor
+
+  // Draw cell
+  ctx.fillStyle = color
+  ctx.fillRect(x, y, cellSize, cellSize)
+
+  // Draw cell border
+  ctx.strokeStyle = '#eaeaea'
+  ctx.strokeRect(x, y, cellSize, cellSize)
+})
+}
+
+function saveAsImage() {
+  // Convert grid to canvas first
+  gridToCanvas()
+
+  // create download link
+  const link =document.createElement('a')
+  link.download = 'pixel-art.png'
+  link.href = canvas.toDataURL('image/png')
+
+  // Trigger donwload
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
 
 function drawGrid() {
   // Calculate grid height based on aspect ratio
@@ -78,14 +129,6 @@ function setupDrawingEvents() {
   grid.addEventListener('contextmenu', preventContextMenu);
 }
 
-genBtn.addEventListener("click", drawGrid)
-// grid.addEventListener('mousedown', draw)
-colorPicker.addEventListener('change', getColor)
-resetGridBtn.addEventListener('click', resetGrid)
-document.addEventListener('DOMContentLoaded', drawGrid)
-rows.addEventListener('change', updateRows)
-coloums.addEventListener('change', updateCols)
-setupDrawingEvents();
 
 function startDrawing(e) {
   // Only respond to left (0) or right (2) mouse buttons
@@ -106,3 +149,12 @@ function preventContextMenu(e) {
   e.preventDefault();
 }
 
+genBtn.addEventListener("click", drawGrid)
+// grid.addEventListener('mousedown', draw)
+colorPicker.addEventListener('change', getColor)
+resetGridBtn.addEventListener('click', resetGrid)
+document.addEventListener('DOMContentLoaded', drawGrid)
+rows.addEventListener('change', updateRows)
+coloums.addEventListener('change', updateCols)
+saveBtn.addEventListener('click', saveAsImage)
+setupDrawingEvents();

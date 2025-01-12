@@ -59,8 +59,8 @@ main {
 }
 
 .control-group.buttons {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -93,6 +93,10 @@ button {
   flex: 1;
 }
 
+#canvas {
+  display: none;
+}
+
 #generate {
   background-color: #4CAF50;
   color: white;
@@ -109,6 +113,10 @@ button {
 
 #reset-grid:hover {
   background-color: #da190b;
+}
+
+#save-grid {
+  background-color: #666;
 }
 
 /* 5. Style labels and text */
