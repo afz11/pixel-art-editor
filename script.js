@@ -6,6 +6,7 @@ const rows = document.querySelector('#rows')
 const coloums = document.querySelector('#coloums')
 const rowsLable =  document.querySelector('label[for="rows"]')
 const coloumsLabel =  document.querySelector('label[for="coloums"]')
+const mouseHover = document.querySelector('#mouse-hover')
 
 const gridDetails = {
   rows: 8,
@@ -13,6 +14,7 @@ const gridDetails = {
   backgroundColor: "#c4c4c4"
 }
 
+let isDrawing = false;
 
 function drawGrid() {
   // Calculate grid height based on aspect ratio
@@ -38,9 +40,10 @@ function drawGrid() {
 }
 
 function draw(e) {
-  if(e.target.classList.contains('cell')) {
-    e.target.classList.toggle('active')
-    e.target.style.backgroundColor = getColor()
+  if (!isDrawing && e.type !== 'click') return;
+  
+  if (e.target.classList.contains('cell')) {
+    e.target.style.backgroundColor = getColor();
   }
 }
 
@@ -64,14 +67,28 @@ function updateRows() {
   document.querySelector('label[for="rows"]').textContent = `Rows: ${gridDetails.rows}`
 }
 
-
+function setupDrawingEvents() {
+  grid.addEventListener('mousedown', startDrawing);
+  grid.addEventListener('mousemove', draw);
+  document.addEventListener('mouseup', stopDrawing);
+  grid.addEventListener('click', draw);
+}
 
 genBtn.addEventListener("click", drawGrid)
-grid.addEventListener('mousedown', draw)
+// grid.addEventListener('mousedown', draw)
 colorPicker.addEventListener('change', getColor)
 resetGridBtn.addEventListener('click', resetGrid)
 document.addEventListener('DOMContentLoaded', drawGrid)
 rows.addEventListener('change', updateRows)
 coloums.addEventListener('change', updateCols)
+setupDrawingEvents();
 
+function startDrawing(e) {
+  isDrawing = true;
+  draw(e); // Draw the first cell when clicking
+}
+
+function stopDrawing() {
+  isDrawing = false;
+}
 
