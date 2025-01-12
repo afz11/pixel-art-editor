@@ -15,6 +15,7 @@ const gridDetails = {
 }
 
 let isDrawing = false;
+let isErasing = false;
 
 function drawGrid() {
   // Calculate grid height based on aspect ratio
@@ -43,7 +44,8 @@ function draw(e) {
   if (!isDrawing && e.type !== 'click') return;
   
   if (e.target.classList.contains('cell')) {
-    e.target.style.backgroundColor = getColor();
+    const color = isErasing ? gridDetails.backgroundColor : getColor();
+    e.target.style.backgroundColor = color;
   }
 }
 
@@ -72,6 +74,8 @@ function setupDrawingEvents() {
   grid.addEventListener('mousemove', draw);
   document.addEventListener('mouseup', stopDrawing);
   grid.addEventListener('click', draw);
+  // Add these new event listeners
+  grid.addEventListener('contextmenu', preventContextMenu);
 }
 
 genBtn.addEventListener("click", drawGrid)
@@ -84,11 +88,21 @@ coloums.addEventListener('change', updateCols)
 setupDrawingEvents();
 
 function startDrawing(e) {
-  isDrawing = true;
-  draw(e); // Draw the first cell when clicking
+  // Only respond to left (0) or right (2) mouse buttons
+  if (e.button === 0 || e.button === 2) {
+    isDrawing = true;
+    isErasing = (e.button === 2);
+    draw(e);
+  }
 }
 
 function stopDrawing() {
   isDrawing = false;
+  isErasing = false;
+}
+
+// Add this function to prevent context menu
+function preventContextMenu(e) {
+  e.preventDefault();
 }
 
