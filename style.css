@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  width: min(600px, 90vw);
+  background-color: #b1d19e;
+  margin: 0 auto;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #5e5a5a;
+  aspect-ratio: 1;
+}
+
+.grid-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.active {
+  background-color: #002385;
+}
+
+#generate{
+  flex-grow: 0;
+  width: 10rem;
+  height: 3rem;
+}
