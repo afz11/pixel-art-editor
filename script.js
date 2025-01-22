@@ -9,6 +9,7 @@ const coloumsLabel =  document.querySelector('label[for="coloums"]')
 const mouseHover = document.querySelector('#mouse-hover')
 const saveBtn = document.querySelector('#save-grid')
 const canvas = document.querySelector('#canvas')
+const randomDrawBtn = document.querySelector('#random-draw')
 canvas.draggable = false
 
 const ctx = canvas.getContext('2d')
@@ -23,54 +24,43 @@ let isDrawing = false;
 let isErasing = false;
 
 function gridToCanvas() {
-  // Get all cells and their computed styles
   const cells = Array.from(grid.querySelectorAll('.cell'))
-  const cellSize = 32 // Size of each cell in pixels
+  const cellSize = 32
 
-// Set canvas size based on grid dimensions
-canvas.width = gridDetails.cols * cellSize
-canvas.height = gridDetails.rows * cellSize
+  canvas.width = gridDetails.cols * cellSize
+  canvas.height = gridDetails.rows * cellSize
 
-// Clear canvas
-ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-// Draw Each cell to canvas
-cells.forEach((cell, index) => {
-  const row = Math.floor(index / gridDetails.cols)
-  const col = index % gridDetails.cols
-  const x = col * cellSize
-  const y = row * cellSize
+  cells.forEach((cell, index) => {
+    const row = Math.floor(index / gridDetails.cols)
+    const col = index % gridDetails.cols
+    const x = col * cellSize
+    const y = row * cellSize
 
-  // Get cell color
-  const color = cell.style.backgroundColor || gridDetails.backgroundColor
+    const color = cell.style.backgroundColor || gridDetails.backgroundColor
 
-  // Draw cell
-  ctx.fillStyle = color
-  ctx.fillRect(x, y, cellSize, cellSize)
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, cellSize, cellSize)
 
-  // Draw cell border
-  ctx.strokeStyle = '#eaeaea'
-  ctx.strokeRect(x, y, cellSize, cellSize)
-})
+    ctx.strokeStyle = '#eaeaea'
+    ctx.strokeRect(x, y, cellSize, cellSize)
+  })
 }
 
 function saveAsImage() {
-  // Convert grid to canvas first
   gridToCanvas()
 
-  // create download link
   const link =document.createElement('a')
   link.download = 'pixel-art.png'
   link.href = canvas.toDataURL('image/png')
 
-  // Trigger donwload
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
 }
 
 function drawGrid() {
-  // Calculate grid height based on aspect ratio
   const aspectRatio = gridDetails.rows / gridDetails.cols
   grid.style.height = `${grid.offsetWidth * aspectRatio}px`
 
@@ -80,7 +70,6 @@ function drawGrid() {
 
   rowsLable.textContent = `Rows: ${gridDetails.rows}`
   coloumsLabel.textContent = `Coloums: ${gridDetails.cols}`
-
 
   grid.innerHTML= ''
 
@@ -116,6 +105,7 @@ function updateCols() {
   gridDetails.cols = coloums.value
   coloumsLabel.textContent = `Coloums: ${gridDetails.cols}`
 }
+
 function updateRows() {
   gridDetails.rows = rows.value
   document.querySelector('label[for="rows"]').textContent = `Rows: ${gridDetails.rows}`
@@ -126,13 +116,10 @@ function setupDrawingEvents() {
   grid.addEventListener('mousemove', draw);
   document.addEventListener('mouseup', stopDrawing);
   grid.addEventListener('click', draw);
-  // Add these new event listeners
   grid.addEventListener('contextmenu', preventContextMenu);
 }
 
-
 function startDrawing(e) {
-  // Only respond to left (0) or right (2) mouse buttons
   if (e.button === 0 || e.button === 2) {
     isDrawing = true;
     isErasing = (e.button === 2);
@@ -145,14 +132,27 @@ function stopDrawing() {
   isErasing = false;
 }
 
-// Add this function to prevent context menu
 function preventContextMenu(e) {
   e.preventDefault();
 }
 
+function generateRandomDrawing() {
+  const cells = Array.from(grid.querySelectorAll('.cell'))
+  const colors = [
+    '#FF0000', '#00FF00', '#0000FF', 
+    '#FFFF00', '#FF00FF', '#00FFFF',
+    '#000000', '#FFFFFF', '#FFA500'
+  ]
+  
+  cells.forEach(cell => {
+    if (Math.random() < 0.3) {
+      const randomColor = colors[Math.floor(Math.random() * colors.length)]
+      cell.style.backgroundColor = randomColor
+    }
+  })
+}
 
 genBtn.addEventListener("click", drawGrid)
-// grid.addEventListener('mousedown', draw)
 colorPicker.addEventListener('change', getColor)
 resetGridBtn.addEventListener('click', resetGrid)
 document.addEventListener('DOMContentLoaded', drawGrid)
@@ -160,3 +160,4 @@ rows.addEventListener('change', updateRows)
 coloums.addEventListener('change', updateCols)
 saveBtn.addEventListener('click', saveAsImage)
 setupDrawingEvents();
+randomDrawBtn.addEventListener('click', generateRandomDrawing)
