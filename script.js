@@ -9,6 +9,7 @@ const coloumsLabel =  document.querySelector('label[for="coloums"]')
 const mouseHover = document.querySelector('#mouse-hover')
 const saveBtn = document.querySelector('#save-grid')
 const canvas = document.querySelector('#canvas')
+canvas.draggable = false
 
 const ctx = canvas.getContext('2d')
 
@@ -148,6 +149,7 @@ function stopDrawing() {
 function preventContextMenu(e) {
   e.preventDefault();
 }
+
 
 genBtn.addEventListener("click", drawGrid)
 // grid.addEventListener('mousedown', draw)
